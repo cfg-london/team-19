@@ -130,9 +130,14 @@
 			data: dataOut
 		});
 
-		document.getElementsByClassName("IND").addEventListener("onclick", function() {
-			document.getElementById("overlay").style.display = "flex";
+		$(".IND").click(function() {
+			$("#overlay").css("display", "flex");
 		});
+
+		/*document.getElementsByClassName("IND")[0].addEventListener("onclick", function() {
+			console.log("hi");
+			document.getElementById("overlay").style.display = "flex";
+		});*/
 	});
 
 	Plotly.newPlot("graph", [{
