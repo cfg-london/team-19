@@ -4,25 +4,71 @@
 <link rel=stylesheet href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <style>
-	body, html {margin: 0}
+	body, html {margin: 0; height: 100%}
+
+	body {
+		display: flex;
+		flex-direction: column;
+	}
 
 	#header-bar {
-		position: absolute;
-		top: 0;
-		left: 0;
 		width: 100%;
 		height: 64px;
-		background: #55B9B3;
+		background: #75BEB3;
+		flex-grow: 0;
+		flex-shrink: 0;
 	}
 
 	#logo {
 		display: block;
 		margin: auto;
 	}
+
+	#container {
+		display: block;
+		flex-grow: 1;
+		margin: 32px;
+	}
+
+	.popup {
+		position: absolute;
+		margin: auto;
+		width: 50%;
+		top: 100px;
+	}
 </style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script>
+<script src="datamaps.world.min.js"></script>
 
 <div id="header-bar">
 	<img id=logo src="http://www.equalmeasures2030.org/wp-content/uploads/2017/10/em2030.jpg" height=100%>
+</div>
 
-	
+<div id="container"></div>
+<script>
+	var map = new Datamap({
+		element: document.getElementById('container'),
+		fills: {
+			HIGH: "red",
+			LOW: "blue",
+			MEDIUM: "purple",
+			defaultFill: "gray"
+		},
+		data: {
+			COL: {
+				fillKey: "LOW",
+				numberOfThings: 35
+			},
+			IND: {
+				fillKey: "MEDIUM",
+				numberOfThings: 123
+			}
+		}
+	});
+</script>
+
+<div class="card card-body popup">
+	TEST
 </div>
