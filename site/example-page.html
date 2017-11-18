@@ -130,9 +130,9 @@
 			data: dataOut
 		});
 
-		document.getElementsByClassName("IND").onclick = function() {
+		document.getElementsByClassName("IND").addEventListener("onclick", function() {
 			document.getElementById("overlay").style.display = "flex";
-		}
+		});
 	});
 
 	Plotly.newPlot("graph", [{
