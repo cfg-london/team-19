@@ -1,29 +1,37 @@
 import json, flask, _mysql
 app = flask.Flask(__name__)
 
-db = _mysql.connect()
+db = _mysql.connect(db="datarep", user="root")
 
 POSSIBLE_RESTRAINTS = {
-	"country": "",
-	"years": "",
+	"country": "Country",
+	"years": "Survey",
 }
 
 @app.route("/")
 def api():
-	query = "SELECT * FROM EditedData"
+	query = "SELECT * FROM editeddata"
 	wheres = []
 
+	print(POSSIBLE_RESTRAINTS.keys(), flask.request.args)
+
 	for restraint in POSSIBLE_RESTRAINTS.keys():
-		if restraint in request.args.keys():
+		if restraint in flask.request.args.keys():
 			where = "WHERE " + POSSIBLE_RESTRAINTS[restraint] + " "
 			if restraint == "years":
-				where += "BETWEEN" + " AND ".join(request.args[restraint].split(".."))[:2]
+				where += "BETWEEN" + " AND ".join(flask.request.args[restraint].split(".."))[:2]
 			else:
-				where += "= " + request.args[restraint]
+				where += "= \"" + flask.request.args[restraint] + "\""
+
+			wheres.append(where)
 
 	query += " " + " ".join(wheres)
+	print(query)
 	db.query(query)
 
 	rows = db.store_result()
 	rows = rows.fetch_row(0)
-	return json.json_encode(rows)
+
+	rows = tuple(tuple(rows[i][j].decode("utf-8") for j in range(len(rows[i]))) for i in range(len(rows)))
+
+	return json.dumps(rows)
