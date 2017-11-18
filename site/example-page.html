@@ -92,6 +92,7 @@
 		<h2 class="card-title"><b>Indicators</b> for <b id="country-name"></b></h2>
 	</div>
 	<div class="close-button fa fa-times" onclick="document.getElementById('overlay').style.display='none'"></div>
+	<h3>Total percentage of population/ Indicator for the survey 2006</h3>
 	<div id="graph"></div>
 </div>
 </div>
@@ -144,8 +145,8 @@
 	});
 
 	Plotly.newPlot("graph", [{
-		x: ["Marriage w/ Contraception", "Marriage M. Contraception", "Married by 15", "Married by 18"],
-		y: [80, 63, 47, 59],
+		x: ["Marriage w/ Contraception", "Married using modern Contraception", "Unmet need for family planning","No antenatal care" ,"Family planning by modern methods","Women with secondary or higher education"],
+		y: [56.3, 48.5, 13.9, 69.1,23,44.7],
 		type: "bar",
 		hoverinfo: "none"
 	}]);
