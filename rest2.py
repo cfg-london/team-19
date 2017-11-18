@@ -6,6 +6,7 @@ db = _mysql.connect(db="datarep", user="root")
 POSSIBLE_RESTRAINTS = {
 	"country": "Country",
 	"years": "Survey_Year",
+	"years": "Survey"
 }
 
 @app.route("/<path:path>")
