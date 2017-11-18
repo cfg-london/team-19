@@ -60,6 +60,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script>
 <script src="datamaps.world.min.js"></script>
+<script src="constants.js"></script>
 
 <div id="header-bar">
 	<img id=logo src="http://www.equalmeasures2030.org/wp-content/uploads/2017/10/em2030.jpg" height=100%>
@@ -78,26 +79,29 @@
 </div>
 
 <script>
-	$.json("127.0.0.1?country=Kenya", function(data) {
-		console.log(data);
-	});
-	var map = new Datamap({
-		element: document.getElementById('container'),
-		fills: {
-			HIGH: "red",
-			LOW: "blue",
-			MEDIUM: "purple",
-			defaultFill: "gray"
-		},
-		data: {
-			COL: {
-				fillKey: "LOW",
-				numberOfThings: 35
+	var dataOut = {};
+	$.getJSON("http://127.0.0.1:5000/data?years=1995..2000", function(data) {
+		data.forEach(function(row) {
+			var fillKey;
+			if(row[2] > 70) fillKey = "HIGH";
+			else if(row[2] > 50) fillKey = "MEDIUM";
+			else fillKey = "LOW";
+
+			dataOut[countries[row[0]]] = {
+				numberOfThings: row[2],
+				fillKey: fillKey
+			};
+		});
+
+		var map = new Datamap({
+			element: document.getElementById('container'),
+			fills: {
+				HIGH: "red",
+				LOW: "blue",
+				MEDIUM: "purple",
+				defaultFill: "gray"
 			},
-			IND: {
-				fillKey: "MEDIUM",
-				numberOfThings: 123
-			}
-		}
+			data: dataOut
+		});
 	});
 </script>

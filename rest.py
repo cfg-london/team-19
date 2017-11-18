@@ -8,7 +8,11 @@ POSSIBLE_RESTRAINTS = {
 	"years": "Survey",
 }
 
-@app.route("/")
+@app.route("/<path:path>")
+def index(path):
+	return flask.send_from_directory("site", path)
+
+@app.route("/data")
 def api():
 	query = "SELECT * FROM editeddata"
 	wheres = []
@@ -19,7 +23,7 @@ def api():
 		if restraint in flask.request.args.keys():
 			where = "WHERE " + POSSIBLE_RESTRAINTS[restraint] + " "
 			if restraint == "years":
-				where += "BETWEEN" + " AND ".join(flask.request.args[restraint].split(".."))[:2]
+				where += "BETWEEN " + " AND ".join(flask.request.args[restraint].split("..")[:2])
 			else:
 				where += "= \"" + flask.request.args[restraint] + "\""
 
