@@ -1,5 +1,7 @@
-import json, flask
+import json, flask, _mysql
 app = flask.Flask(__name__)
+
+db = _mysql.connect()
 
 POSSIBLE_RESTRAINTS = {
 	"country": "",
@@ -20,3 +22,8 @@ def api():
 				where += "= " + request.args[restraint]
 
 	query += " " + " ".join(wheres)
+	db.query(query)
+
+	rows = db.store_result()
+	rows = rows.fetch_row(0)
+	return json.json_encode(rows)
