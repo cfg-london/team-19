@@ -64,6 +64,7 @@
 		right: 10px;
 		font-size: 200%;
 		color: white;
+		cursor: pointer;
 	}
 </style>
 
@@ -78,13 +79,14 @@
 
 <div id="container"></div>
 
-<div id=overlay>
+<div id=overlay style="display: none">
 <div class="card popup">
 	<img src="http://www.equalmeasures2030.org/wp-content/uploads/2017/03/Empowerment_Senegal_4-Home.jpg" class="card-img-top" style="width: 100%; height: 200px; object-fit: cover">
 	<div class="card-body">
-		<h2 class="card-title"><b>Female Circumcision</b> for <b>India</b></h2>
+		<h2 class="card-title"><b>Indicators</b> for <b id="country-name"></b></h2>
 	</div>
-	<div class="close-button fa fa-times"></div>
+	<div class="close-button fa fa-times" onclick="document.getElementById('overlay').style.display='none'"></div>
+	<div id="graph"></div>
 </div>
 </div>
 
@@ -124,5 +126,16 @@
 			},
 			data: dataOut
 		});
+
+		document.getElementsByClassName("IND").onclick = function() {
+			document.getElementById("overlay").style.display = "flex";
+		}
 	});
+
+	Plotly.newPlot("graph", [{
+		x: ["Marriage w/ Contraception", "Marriage M. Contraception", "Married by 15", "Married by 18"],
+		y: [80, 63, 47, 59],
+		type: "bar",
+		hoverinfo: "none"
+	}]);
 </script>
